@@ -1,0 +1,158 @@
+{{> header}}
+<div class="row" style="overflow:hidden;">
+  <div class="col col-sm-12 col-md-5 col-lg-5 text-center">
+
+    <ui5-tabcontainer id="tabs" class="full-width" fixed content-background-design="Transparent">
+      <ui5-tab class="ui5-tab" text="Grid" selected>
+
+          <div>
+            <ui5-label for="grid_x" show-colon>Grid X</ui5-label>
+            <ui5-slider id="grid_x" value="10" min="1" max="10" step="1" label-interval="1" show-tickmarks class="change"></ui5-slider>
+          </div>
+          <div>
+            <ui5-label for="grid_y" show-colon>Grid Y</ui5-label>
+            <ui5-slider id="grid_y" value="10" min="1" max="10" step="1" label-interval="1" show-tickmarks class="change"></ui5-slider>
+          </div>
+          <div class="row mt-3 gy-2">
+            <div class="col col-12 col-xl-6 gx-5">
+              <div id="power_controls" class="row pb-2 border border-opacity-50 borderFillColorGray rounded-2">
+                <div class="col-12">
+                  Power
+                </div>
+                <dic class="col toHide">
+                  <ui5-label for="power_min" show-colon>Min %</ui5-label>
+                  <ui5-step-input id="power_min" value="1" min="1" max="100" class="text-center change"></ui5-step-input>
+                </dic>
+                <div class="col">
+                  <ui5-label for="power_max" class="toHide" show-colon>Max %</ui5-label>
+                  <ui5-step-input id="power_max" value="80" min="1" max="100" class="text-center change"></ui5-step-input>
+                </div>
+              </div>
+            </div>
+            <div class="col col-12 col-xl-6 gx-5">
+              <div id="speed_controls" class="row pb-2 border border-opacity-50 borderFillColorGray rounded-2">
+                <div class="col-12">
+                  Speed
+                </div>
+                <div class="col toHide">
+                  <ui5-label for="speed_min" show-colon>Min</ui5-label>
+                  <ui5-step-input id="speed_min" value="100" min="1" step="10" value-precision="0" class="text-center change"></ui5-step-input>
+                </div>
+                <div class="col">
+                  <ui5-label for="speed_max" class="toHide" show-colon>Max</ui5-label>
+                  <ui5-step-input id="speed_max" value="400" min="1" step="10" value-precision="0" class="text-center change"></ui5-step-input>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col">
+              <ui5-segmented-button id="mode" accessible-name="Mode" class="change">
+                <ui5-segmented-button-item id="engrave" pressed>Engrave</ui5-segmented-button-item>
+                <ui5-segmented-button-item id="cut">Cut</ui5-segmented-button-item>
+              </ui5-segmented-button>
+            </div>
+          </div>
+
+      </ui5-tab>
+      <ui5-tab id="labels_tab" class="ui5-tab" text="Labels">
+
+        <div class="row">
+          <div class="col">
+            <ui5-label for="label_power" show-colon>Power %</ui5-label>
+            <ui5-step-input id="label_power" value="40" min="1" max="100" class="text-center change"></ui5-step-input>
+          </div>
+          <div class="col">
+            <ui5-label for="label_speed" show-colon>Speed</ui5-label>
+            <ui5-step-input id="label_speed" value="50" min="0" step="10" value-precision="0" class="text-center change"></ui5-step-input>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col">
+            <p>Settings on this tab will affect all texts around the grid. Currently highlighted in red.</p>
+          </div>
+        </div>
+
+      </ui5-tab>
+
+      <ui5-tab class="ui5-tab" text="Other">
+        <div class="row mt-3">
+          <div class="col">
+            <ui5-label for="passes">Passes:</ui5-label>
+            <ui5-combobox id="passes" value="1" class="change">
+              <ui5-cb-item text="1"></ui5-cb-item>
+              <ui5-cb-item text="2"></ui5-cb-item>
+              <ui5-cb-item text="3"></ui5-cb-item>
+              <ui5-cb-item text="4"></ui5-cb-item>
+              <ui5-cb-item text="5"></ui5-cb-item>
+            </ui5-combobox>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col">
+            <ui5-label for="speed_unit" show-colon>Unit</ui5-label>
+            <ui5-segmented-button id="speed_unit" class="change">
+              <ui5-segmented-button-item id="mms" pressed>mm/s</ui5-segmented-button-item>
+              <ui5-segmented-button-item id="mmm">mm/m</ui5-segmented-button-item>
+              <ui5-segmented-button-item id="ins">in/s</ui5-segmented-button-item>
+              <ui5-segmented-button-item id="inm">in/m</ui5-segmented-button-item>
+            </ui5-segmented-button>
+            <ui5-button id="convert_button" design="Attention">Convert</ui5-button>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col">
+            <ui5-checkbox id="logo" text="Include address" class="change" checked></ui5-checkbox>
+          </div>
+        </div>
+      </ui5-tab>
+    </ui5-tabcontainer>
+
+    <div class="row">
+      <div class="col pt-2 text-center">
+        <div id="download_group">
+          <p id="in_app_warning" class="mb-0"><b>In App Browser detected!</b> Downloading may not work. Please open in your regular/os browser.</p>
+          <ui5-button id="download_xcs_dialog_button" design="Positive" icon="download" tooltip="XTOOL Creative Space file (.xcs)" icon-end>XCS</ui5-button>
+          <ui5-button id="download_lightburn" design="Positive" icon="download" icon-end tooltip="LightBurn file (.lbrn)">LightBurn</ui5-button>
+          <ui5-checkbox id="zip" text="as .zip"></ui5-checkbox>
+        </div>
+      </div>
+    </div>
+
+    <ui5-dialog id="download_xcs_dialog" header-text="Download XCS" state="Warning">
+      <section>
+        <p>For XCS files you should open XTOOL Creative Space and connect your machine
+          before opening the generated file. This is to prevent the program from
+          loosing all speed and power settings.</p>
+      </section>
+      <div slot="footer" class="dialog-footer pt-1">
+        <ui5-button id="download_xcs" design="Positive" icon="download" tooltip="XTOOL Creative Space file (.xcs)" icon-end>Download</ui5-button>
+        <ui5-button id="download_xcs_cancel" design="Default" icon="sys-cancel-2" icon-end>Cancel</ui5-button>
+      </div>
+    </ui5-dialog>
+
+    <div class="row mt-3">
+      <div class="col">
+        <ui5-icon id="alert" name="alert"></ui5-icon>
+        <ul id="legend">
+          <li>Set power and speed according to machine and material. <b>Some combinations will start a fire!</b></li>
+          <li>Downloading will convert the speed internally to mm/s. Only the labels will remain unconverted.</li>
+          <li>Some combinations can be outside the limits of your machine. <b>Please respect the limits defined by the machine manufacturer.</b></li>
+          <li><b>Disclaimer:</b> Use generated grid on your own risk.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <div id="grid_container" class="col col-sm-12 col-md-7 col-lg-7 text-center">
+    <div id="grid"></div>
+    <div class="row">
+      <div class="col text-start">
+        <ui5-checkbox id="simulate" text="Simulate effect" class="change"></ui5-checkbox>
+      </div>
+    </div>
+  </div>
+
+</div>
+{{> footer}}

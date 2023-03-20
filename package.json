@@ -1,0 +1,27 @@
+{
+  "name": "gridmaster",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "jquery": "^3.6.4",
+    "php-server": "^1.0.0",
+    "sass": "^1.58.3",
+    "vite": "^4.1.0"
+  },
+  "dependencies": {
+    "@ui5/webcomponents": "^1.10.4",
+    "@ui5/webcomponents-icons": "^1.10.4",
+    "bootstrap": "^5.2.3",
+    "client-zip": "^2.3.0",
+    "convert": "^4.10.0",
+    "detect-inapp": "github:f2etw/detect-inapp",
+    "uuid": "^9.0.0",
+    "vite-plugin-handlebars": "^1.6.0"
+  }
+}

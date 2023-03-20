@@ -1,0 +1,70 @@
+{{> header}}
+<div class="row mt-5">
+    <div class="col text-center">
+        <h1>FAQ</h1>
+    </div>
+</div>
+<div class="row mb-5">
+    <div class="col">
+        <ui5-panel
+                no-animation
+                header-level="H2"
+                header-text="1. How can I make my grid smaller?"
+                class="panel-width">
+            The fastest way should be:
+            <ul class="mt-3">
+                <li>Select the whole grid including the labels.</li>
+                <li>(optional) Group for ease of working.</li>
+                <li>Resize with the mouse.</li>
+            </ul>
+        </ui5-panel>
+        <ui5-panel
+                collapsed
+                no-animation
+                header-level="H2"
+                header-text="2. I've selected different unit for the speed. Why my program shows only the row labels with it?"
+                class="panel-width">
+            Applications come with different capabilities and those capable of showing your desired unit of measure will have
+            a setting that you have to adjust in the application. The desired speed should remain as configured regardless of
+            the application settings.
+        </ui5-panel>
+        <ui5-panel
+                collapsed
+                no-animation
+                header-level="H2"
+                header-text="3. LightBurn provides material test tool. What are the advantages of this one?"
+                class="panel-width">
+            Ease of use and working with a file is more convenient if you like to store multiple material tests ready for later re-use.
+        </ui5-panel>
+        <ui5-panel
+                collapsed
+                no-animation
+                header-level="H2"
+                header-text="4. Estimated time is too long. What can I do to shorten the burning time?"
+                class="panel-width">
+            <p>A good solution will be a balanced combination of all 3 suggestions bellow.</p>
+            <ul>
+                <li>Check your speed range. This is one of the main factors that will affect how much time the grid will take to burn. Try to put a reasonable speeds for your material and laser power.</li>
+                <li>Use smaller grid's. I usually start with 3x3 for most of my work. 10x10 should not be your first choice unless you need very high resolution test.</li>
+                <li>You can also manually resize the grid in your program. This is described in question 1. The actual area being engraved is a big factor affecting your time.</li>
+            </ul>
+        </ui5-panel>
+        <ui5-panel
+                collapsed
+                no-animation
+                header-level="H2"
+                header-text="5. What new features are you planning?"
+                class="panel-width">
+            <ul>
+                <li>Additional grid sizing parameters.</li>
+                <li>Using passes as one of the scale.</li>
+                <li>Different grid form factors.</li>
+                <li>Predefined machine profiles.</li>
+                <li>Ability to save and restore current setup.</li>
+                <li>SVG download.</li>
+                <li>...</li>
+            </ul>
+        </ui5-panel>
+    </div>
+</div>
+{{> footer}}

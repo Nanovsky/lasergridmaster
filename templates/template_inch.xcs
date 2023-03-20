@@ -1,0 +1,205 @@
+{
+  "canvasId": "cf6fb022-e98c-45e1-96e7-c0b55fcc1971",
+  "canvas": [
+    {
+      "id": "cf6fb022-e98c-45e1-96e7-c0b55fcc1971",
+      "title": "{panel}1",
+      "displays": [
+        {
+          "id": "1785689a-d9e8-4fa2-a285-5a06f1804b80",
+          "type": "RECT",
+          "x": 127.00000012954001,
+          "y": 127.00000012954004,
+          "angle": 0,
+          "scale": {
+            "x": 0.6277914769098053,
+            "y": 0.41605367596312054
+          },
+          "skew": {
+            "x": 0,
+            "y": 0
+          },
+          "pivot": {
+            "x": 0,
+            "y": 0
+          },
+          "localSkew": {
+            "x": 0,
+            "y": 0
+          },
+          "offsetX": 127.00000012954001,
+          "offsetY": 127.00000012954004,
+          "lockRatio": false,
+          "isClosePath": true,
+          "zOrder": 0,
+          "width": 12.700000012954046,
+          "height": 12.70000001295406,
+          "isFill": false,
+          "lineColor": 10036991,
+          "fillColor": 10036991
+        }
+      ]
+    }
+  ],
+  "extId": "D1Pro",
+  "device": {
+    "id": "MDP",
+    "power": 20,
+    "data": {
+      "dataType": "Map",
+      "value": [
+        [
+          "2153d583-fe19-4413-a201-61821206101e",
+          {
+            "mode": "LASER_PLANE",
+            "data": {
+              "LASER_PLANE": {
+                "material": 0,
+                "thickness": 0,
+                "cushion": 0
+              }
+            },
+            "displays": {
+              "dataType": "Map",
+              "value": [
+                [
+                  "910ff107-3465-4056-8fde-b036d16ea38c",
+                  {
+                    "processingType": "VECTOR_CUTTING",
+                    "data": {
+                      "VECTOR_CUTTING": {
+                        "materialType": "customize",
+                        "processIgnore": false,
+                        "parameter": {
+                          "customize": {
+                            "power": 100,
+                            "speed": 20,
+                            "repeat": 1
+                          }
+                        }
+                      }
+                    },
+                    "type": "RECT",
+                    "isFill": false
+                  }
+                ],
+                [
+                  "1558fd92-4923-4da6-9a37-e66138799594",
+                  {
+                    "processingType": "FILL_VECTOR_ENGRAVING",
+                    "data": {
+                      "FILL_VECTOR_ENGRAVING": {
+                        "materialType": "customize",
+                        "processIgnore": false,
+                        "parameter": {
+                          "customize": {
+                            "power": 100,
+                            "speed": 400,
+                            "repeat": 1,
+                            "density": 100,
+                            "bitmapMode": "grayscale",
+                            "bitmapScanMode": "zMode"
+                          }
+                        }
+                      }
+                    },
+                    "type": "RECT",
+                    "isFill": false
+                  }
+                ]
+              ]
+            },
+            "needUpdateCanvas": false
+          }
+        ],
+        [
+          "cf6fb022-e98c-45e1-96e7-c0b55fcc1971",
+          {
+            "mode": "LASER_PLANE",
+            "data": {
+              "LASER_PLANE": {
+                "material": 0,
+                "thickness": 0,
+                "cushion": 0
+              }
+            },
+            "displays": {
+              "dataType": "Map",
+              "value": [
+                [
+                  "1785689a-d9e8-4fa2-a285-5a06f1804b80",
+                  {
+                    "processingType": "VECTOR_CUTTING",
+                    "data": {
+                      "VECTOR_CUTTING": {
+                        "materialType": "customize",
+                        "processIgnore": false,
+                        "parameter": {
+                          "customize": {
+                            "power": 100,
+                            "speed": 15,
+                            "repeat": 1
+                          }
+                        }
+                      },
+                      "VECTOR_ENGRAVING": {
+                        "materialType": "customize",
+                        "processIgnore": false,
+                        "parameter": {
+                          "customize": {
+                            "power": 1,
+                            "speed": 20,
+                            "repeat": 1
+                          }
+                        }
+                      },
+                      "FILL_VECTOR_ENGRAVING": {
+                        "materialType": "customize",
+                        "processIgnore": false,
+                        "parameter": {
+                          "customize": {
+                            "power": 1,
+                            "speed": 80,
+                            "repeat": 1,
+                            "density": 100,
+                            "bitmapMode": "grayscale",
+                            "bitmapScanMode": "zMode"
+                          }
+                        }
+                      },
+                      "KNIFE_CUTTING": {
+                        "materialType": "customize",
+                        "processIgnore": false,
+                        "parameter": {
+                          "customize": {
+                            "cutPressure": 45,
+                            "speed": 40,
+                            "repeat": 1
+                          }
+                        }
+                      }
+                    },
+                    "type": "RECT",
+                    "isFill": false
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      ]
+    },
+    "materialList": []
+  },
+  "version": "1.1.24",
+  "created": 1678013263087,
+  "modify": 1678015481915,
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) xToolCreativeSpace/1.1.24 Chrome/104.0.5112.102 Electron/20.1.0 Safari/537.36",
+  "meta": [
+    {
+      "version": "1.1.24",
+      "date": 1678013263087,
+      "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) xToolCreativeSpace/1.1.24 Chrome/104.0.5112.102 Electron/20.1.0 Safari/537.36"
+    }
+  ]
+}
