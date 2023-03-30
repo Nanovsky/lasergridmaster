@@ -52,21 +52,24 @@ let getEventName = (oGrid, sFormat) => {
     return a.join(",").slice(0, 40);
 };
 
-async function downloadAsZip(bBlob, name) {
-    let blob = await downloadZip([{
-        name: name,
-        lastModified: new Date(),
-        input: bBlob
-    }]).blob();
+async function downloadAsZip(aFiles, name) {
+    let a = aFiles.map(o => {
+        return {
+            name: o.file,
+            lastModified: new Date(),
+            input: o.blob
+        }
+    });
+
+    let blob = await downloadZip(a).blob();
 
     // make and click a temporary link to download the Blob
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = name.replace(".xcs", ".zip").replace(".lbrn", ".zip");
+    link.download = name;
     link.click();
     link.remove();
 }
-
 
 let downloadBlob = (blob, name) => {
     // Convert your blob into a Blob URL (a special url that points to an object in the browser's memory)

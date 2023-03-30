@@ -1,6 +1,5 @@
 import calc from "./calc";
 import util from "./util.js";
-import {downloadZip} from "client-zip";
 
 let iInitialLeft = 30,
     iInitialTop = 30,
@@ -261,20 +260,26 @@ let getXML = () => {
     return sFile;
 };
 
-let downloadFile = (bZip) => {
+let downloadFile = () => {
     let blob = new Blob([getXML()], {
         type: "application/xml",
     });
 
     let sFile = util.getFileName(Grid, "lbrn");
 
-    if (bZip) {
-        util.downloadAsZip(blob, sFile);
-    } else {
-        util.downloadBlob(blob, sFile);
-    }
+    util.downloadBlob(blob, sFile);
 
     return sFile;
+}
+
+let getFile = (oGrid) => {
+    Grid = oGrid;
+    return {
+        blob: new Blob([getXML()], {
+            type: "application/xml",
+        }),
+        file: util.getFileName(Grid, "lbrn")
+    };
 }
 
 let download = (oGrid, bZip) => {
@@ -283,5 +288,6 @@ let download = (oGrid, bZip) => {
 };
 
 export default {
-    download
+    download,
+    getFile
 }

@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import calc from "./calc";
 import util from "./util.js";
-import {downloadZip} from "client-zip";
 
 let iInitialLeft = 30,
     iInitialTop = 30,
@@ -379,24 +378,29 @@ let getJSON = () => {
 
     reset();
 
-    console.log(o);
     return o;
 };
 
-let downloadFile = (bZip) => {
+let downloadFile = () => {
     let blob = new Blob([JSON.stringify(getJSON())], {
         type: "application/json",
     });
 
     let sFile = util.getFileName(Grid, "xcs");
 
-    if (bZip) {
-        util.downloadAsZip(blob, sFile);
-    } else {
-        util.downloadBlob(blob, sFile);
-    }
+    util.downloadBlob(blob, sFile);
 
     return sFile;
+}
+
+let getFile = (oGrid) => {
+    Grid = oGrid;
+    return {
+        blob: new Blob([JSON.stringify(getJSON())], {
+            type: "application/json",
+        }),
+        file: util.getFileName(Grid, "xcs")
+    };
 }
 
 let download = (oGrid, bZip) => {
@@ -405,5 +409,6 @@ let download = (oGrid, bZip) => {
 };
 
 export default {
-    download
+    download,
+    getFile
 }
