@@ -105,24 +105,36 @@ const inapp = new InApp(navigator.userAgent || navigator.vendor || window.opera)
         document.getElementById("convert_button").style.display = "none";
     });
 
+    document.getElementById("zip").addEventListener("change", oEvent => {
+        let bChecked = oEvent.currentTarget.checked;
+        if (bChecked) {
+            document.getElementById("download_lightburn").style.display = "none";
+            document.getElementById("download_xcs_dialog_button").style.display = "none";
+            document.getElementById("download_zip").style.display = "inline-block";
+        } else {
+            document.getElementById("download_lightburn").style.display = "inline-block";
+            document.getElementById("download_xcs_dialog_button").style.display = "inline-block";
+            document.getElementById("download_zip").style.display = "none";
+        }
+        document.getElementById("dialog_download_zip").classList.toggle("display_none", !bChecked);
+        document.getElementById("download_xcs").classList.toggle("display_none", bChecked);
+    });
+
     document.getElementById("download_lightburn").addEventListener("click", oEvent => {
-        let bZip = document.getElementById("zip").checked,
-            oGrid = calc.getGrid(),
+        let oGrid = calc.getGrid(),
             sEvent = util.getEventName(oGrid, "l"),
-            sFile = toLightBurn.download(oGrid, bZip);
+            sFile = toLightBurn.download(oGrid);
 
         gtag('event', sEvent, {
-            'zip': `${bZip}`,
             'file': sFile
         });
     });
 
     let dialog = document.getElementById("download_xcs_dialog");
     document.getElementById("download_xcs").addEventListener("click", oEvent => {
-        let bZip = document.getElementById("zip").checked,
-            oGrid = calc.getGrid(),
+        let oGrid = calc.getGrid(),
             sEvent = util.getEventName(oGrid, "x"),
-            sFile = toXCS.download(calc.getGrid(), bZip);
+            sFile = toXCS.download(calc.getGrid());
 
         if (dialog.isOpen()) {
             dialog.close();
@@ -130,12 +142,35 @@ const inapp = new InApp(navigator.userAgent || navigator.vendor || window.opera)
 
         // Log some info for analysis
         gtag('event', sEvent, {
-            'zip': `${bZip}`,
+            'file': sFile
+        });
+    });
+
+    document.getElementById("dialog_download_zip").addEventListener("click", e => {
+        let oGrid = calc.getGrid(),
+            sEvent = util.getEventName(oGrid, "x"),
+            oXCS = toXCS.getFile(oGrid),
+            oLBRN = toLightBurn.getFile(oGrid),
+            sFile = util.getFileName(oGrid, "zip");
+
+        if (dialog.isOpen()) {
+            dialog.close();
+        }
+
+        util.downloadAsZip([oXCS, oLBRN], sFile);
+
+        // Log some info for analysis
+        gtag('event', sEvent, {
+            'zip': `true`,
             'file': sFile
         });
     });
 
     document.getElementById("download_xcs_dialog_button").addEventListener("click", () => {
+        dialog.show();
+    });
+
+    document.getElementById("download_zip").addEventListener("click", () => {
         dialog.show();
     });
 

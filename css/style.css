@@ -206,3 +206,15 @@ main *:not(:defined) {
     background-color: var(--warning-bg);
     border-radius: 5px;
 }
+
+#download_zip {
+    display: none;
+}
+
+#passes {
+    width: 40px;
+}
+
+.display_none {
+    display: none;
+}
