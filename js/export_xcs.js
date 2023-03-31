@@ -112,14 +112,14 @@ let getCut = (sUUID, iSpeed, iPower, iPasses) => {
     ];
 }
 
-let createTitleBox = (sText, iTop, iLeft, bVert) => {
+let createTitleBox = (sText, iTop, iLeft, iRotate) => {
     let sUUID = uuidv4(),
         oText = {
             "id": sUUID,
             "type": "TEXT",
             "x": iLeft,
             "y": iTop,
-            "angle": bVert ? 270 : 0,
+            "angle": iRotate ? iRotate : 0,
             "scale": {"x": 1,"y": 1},
             "skew": {"x": 0,"y": 0},
             "pivot": {"x": 0,"y": 0},
@@ -196,7 +196,7 @@ let createColTitles = () => {
     iTop += (iY - iGapY); // No need for a gap for the title
 };
 
-let getLeftTitleOffset = (sTitle, iLeft) => {
+let getTitleOffset = (sTitle, iLeft) => {
     let oWidths = {
             "0": 2,
             "1": 1.7,
@@ -209,7 +209,14 @@ let getLeftTitleOffset = (sTitle, iLeft) => {
             "8": 1.9,
             "9": 1.8,
             ".": 1.2,
-            "k": 2.1
+            "k": 2.1,
+            "P": 1.9,
+            "p": 1.7,
+            "a": 1.5,
+            "s": 1.4,
+            "e": 1.7,
+            ":": 0.5,
+            " ": 0.7
         },
         iSpacing = sTitle.length * 0.1,
         iText = sTitle.split("").reduce((a, v) => a + oWidths[v], 0);
@@ -230,7 +237,7 @@ let getLegendYLength = (sText) => {
 
 let createRowTitles = () => {
     Grid.rowTitles.forEach((sTitle) => {
-        createTitleBox(sTitle, iTop + 3.5, getLeftTitleOffset(sTitle, iLeft));
+        createTitleBox(sTitle, iTop + 3.5, getTitleOffset(sTitle, iLeft));
         iTop += iY + iGapY;
     });
     iTop += iGapY;
@@ -311,10 +318,28 @@ let createLegendY = () => {
     // Positioning is relative to top left corner of text block even when rotated
     iPosY += iText;
 
-    createTitleBox(sTitle, iPosY, iInitialLeft, true);
+    createTitleBox(sTitle, iPosY, iInitialLeft, 270);
 
     iLeft += iGapX * 2;
 };
+
+let createPasses = () => {
+    if (Grid.values.passes <= 1) {
+        return;
+    }
+    let sTitle = `Passes: ${Grid.values.passes}`,
+        iGridY = Grid.values.gridY,
+        iGridX = Grid.values.gridX,
+        iGaps = (iGridY - 1) * iGapY,
+        iHeight = (iGridY * iY) + iGaps,
+        iText = getTitleOffset(sTitle, 15),
+        iPosY = iInitialTop + iY + iGapY + (iHeight / 2) - (iText / 2),
+        iGapsX = (iGridX - 1) * iGapX,
+        iWidthX = (iGridX * iX) + iGapsX,
+        iPosX = iInitialLeft + iX + (iGapX * 5) + iWidthX;
+
+    createTitleBox(sTitle, iPosY, iPosX, 90);
+}
 
 let createLogo = () => {
     let iGridX = Grid.values.gridX,
@@ -368,6 +393,7 @@ let getJSON = () => {
     setTime();
     createLegendX();
     createLegendY();
+    createPasses();
     createColTitles();
     createRowTitles();
     createRows();

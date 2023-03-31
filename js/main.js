@@ -194,9 +194,9 @@ const inapp = new InApp(navigator.userAgent || navigator.vendor || window.opera)
     // Handle Grid/scale responsiveness
     let fnGridResize = () => {
         let iContainer = $GridCont.clientWidth,
-            iScale = ((iContainer / 600) * 100) - 5;
+            iScale = ((iContainer / 620) * 100) - 5;
 
-        if (iContainer < 600) {
+        if (iContainer < 630) {
             $Grid.style.setProperty("transform", `scale(${iScale}%)`);
             $Grid.style.removeProperty("width");
         } else {
@@ -229,6 +229,26 @@ const inapp = new InApp(navigator.userAgent || navigator.vendor || window.opera)
     });
     $Speed.addEventListener("mouseleave", () => {
         $Grid.classList.remove("focus_speed");
+    });
+
+    let $Passes = document.getElementById("passes"),
+        bPassesFocused = false;
+
+    $Passes.addEventListener("mouseenter", () => {
+        $Grid.classList.add("focus_passes");
+    });
+    $Passes.addEventListener("focusin", () => {
+        $Grid.classList.add("focus_passes");
+        bPassesFocused = true;
+    });
+    $Passes.addEventListener("mouseleave", () => {
+        if (!bPassesFocused) {
+            $Grid.classList.remove("focus_passes");
+        }
+    });
+    $Passes.addEventListener("focusout", () => {
+        $Grid.classList.remove("focus_passes");
+        bPassesFocused = false;
     });
 
     if (inapp.isInApp) {
