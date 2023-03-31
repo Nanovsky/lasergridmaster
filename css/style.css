@@ -13,7 +13,7 @@
 }
 
 #grid {
-    width:600px;
+    width:620px;
     height:600px;
     border:1px #b7b7b7 solid;
     position: relative;
@@ -55,6 +55,9 @@
 #grid.focus_power #logo {
     filter: blur(4px) opacity(0.3) grayscale(1);
 }
+#grid.focus_power #passes {
+    filter: blur(4px) opacity(0.3) grayscale(1);
+}
 
 /* Focus speed */
 #grid.focus_speed .title.left {
@@ -76,6 +79,40 @@
 }
 #grid.focus_speed #logo {
     filter: blur(4px) opacity(0.3) grayscale(1);
+}
+#grid.focus_speed #passes {
+    filter: blur(4px) opacity(0.3) grayscale(1);
+}
+
+.passes_1 {
+    display: none;
+}
+
+/* Focus passes */
+#grid.focus_passes .passes_1 {
+    display: block;
+}
+#grid.focus_passes .title.left {
+    filter: blur(4px) opacity(0.3) grayscale(1);
+}
+#grid.focus_passes #legendY {
+    filter: blur(4px) opacity(0.3) grayscale(1);
+}
+#grid.focus_passes .box {
+    filter: blur(4px) opacity(0.3) grayscale(1);
+}
+#grid.focus_passes #legendX {
+    filter: blur(4px) opacity(0.3) grayscale(1);
+}
+#grid.focus_passes .title.top {
+    filter: blur(4px) opacity(0.3) grayscale(1);
+}
+#grid.focus_passes #logo {
+    filter: blur(4px) opacity(0.3) grayscale(1);
+}
+#grid.focus_passes #passes {
+    color: var(--grid-labels-highlight);
+    font-weight: bold;
 }
 
 #grid .title {
@@ -145,6 +182,14 @@
     writing-mode: vertical-lr;
     text-orientation: sideways;
     transform: rotate(180deg);
+    text-align: center;
+}
+
+#grid #passes {
+    position: absolute;
+    box-sizing: border-box;
+    writing-mode: vertical-lr;
+    text-orientation: sideways;
     text-align: center;
 }
 

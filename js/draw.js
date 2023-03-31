@@ -108,6 +108,20 @@ let getLegendY = () => {
     return `<div id="legendY" style="top:${iTop+iGapY+iY}px;height:${iSizeY}px;">Speed ${oGrid.values.speedUnit}</div>`;
 };
 
+let getPasses = oGrid => {
+    let iGridY = oGrid.values.gridY,
+        iGridX = oGrid.values.gridX,
+        iPasses = oGrid.values.passes,
+        iSizeY = (iGridY * iY) + (iGridY * iGapY) - iGapY,
+        iSizeX = iLeft + (iGridX * iX) + (iGridX * iGapX);
+
+    if (iSizeY < 90) {
+        iSizeY = 90;
+    }
+
+    return `<div id="passes" class="passes_${iPasses}" style="top:${iTop}px;left:${iSizeX}px;height:${iSizeY}px;">Passes: ${iPasses}</div>`;
+}
+
 let attachListeners = () => {
 
     $Grid.querySelectorAll(".box").forEach(oBox => {
@@ -194,6 +208,9 @@ let go = (grid) => {
     // Get Horizontal titles
     aElements.push(getHTitle(grid.colTitles));
     aElements.push(getVTitle(grid.rowTitles));
+
+    // Passes
+    aElements.push(getPasses(grid));
 
     // Get actual grid
     grid.grid.forEach(oRow => {

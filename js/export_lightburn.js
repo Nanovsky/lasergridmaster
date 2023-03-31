@@ -66,10 +66,23 @@ let getCut = (iIndex, iSpeed, iPower, iPasses) => {
             </CutSetting>`;
 };
 
-let createTitleBox = (sText, iTop, iLeft, bVert, ah = 1, av = 1) => {
+let createTitleBox = (sText, iTop, iLeft, iVert, ah = 1, av = 1) => {
+    let sRotate;
+    switch (iVert) {
+        case 1:
+            sRotate = "0 -1 1 0";
+            break;
+        case 2:
+            sRotate = "0 1 -1 0";
+            break;
+        case 0:
+        default:
+            sRotate = "1 0 0 1";
+            break;
+    }
     let sShape = `<Shape Type="Text" CutIndex="0" Font="Arial,-1,100,5,50,0,0,0,0,0" Str="${sText}" H="4" LS="0" LnS="0" Ah="${ah}" Av="${av}" Weld="1">
-                    <XForm>${bVert ? "0 -1 1 0" : "1 0 0 1"} ${iLeft} ${iTop}</XForm>
-                </Shape>`;
+                            <XForm>${sRotate} ${iLeft} ${iTop}</XForm>
+                        </Shape>`;
 
     aShape.push(sShape);
 };
@@ -88,7 +101,7 @@ let createColTitles = () => {
             i = iLeft + 1.5;
         }
 
-        createTitleBox(sTitle, (iTop + 1.5), i, false, 0);
+        createTitleBox(sTitle, (iTop + 1.5), i, 0, 0);
         iLeft += iX + iGapX;
     });
 
@@ -96,7 +109,7 @@ let createColTitles = () => {
     iTop += (iY - iGapY); // No need for a gap for the title
 };
 
-let getLeftTitleOffset = (sTitle, iLeft) => {
+let getTitleOffset = (sTitle, iLeft) => {
     let oWidths = {
             "0": 2,
             "1": 1.7,
@@ -109,7 +122,14 @@ let getLeftTitleOffset = (sTitle, iLeft) => {
             "8": 1.9,
             "9": 1.8,
             ".": 1.2,
-            "k": 2.1
+            "k": 2.1,
+            "P": 1.9,
+            "p": 1.7,
+            "a": 1.5,
+            "s": 1.4,
+            "e": 1.7,
+            ":": 0.5,
+            " ": 0.7
         },
         iSpacing = sTitle.length * 0.1,
         iText = sTitle.split("").reduce((a, v) => a + oWidths[v], 0);
@@ -119,7 +139,7 @@ let getLeftTitleOffset = (sTitle, iLeft) => {
 
 let createRowTitles = () => {
     Grid.rowTitles.forEach((sTitle) => {
-        createTitleBox(sTitle, iTop + 3.5, getLeftTitleOffset(sTitle, iLeft), false, 0);
+        createTitleBox(sTitle, iTop + 3.5, getTitleOffset(sTitle, iLeft), 0, 0);
         iTop += iY + iGapY;
     });
     iTop += iGapY;
@@ -191,10 +211,28 @@ let createLegendY = () => {
         iHeight = (iGridY * iY) + iGaps,
         iPosY = iInitialTop + iY + iGapY + (iHeight / 2);
 
-    createTitleBox(sTitle, iPosY, iInitialLeft, true);
+    createTitleBox(sTitle, iPosY, iInitialLeft, 1);
 
     iLeft += iGapX * 2;
 };
+
+let createPasses = () => {
+    if (Grid.values.passes <= 1) {
+        return;
+    }
+    let sTitle = `Passes: ${Grid.values.passes}`,
+        iGridY = Grid.values.gridY,
+        iGridX = Grid.values.gridX,
+        iGaps = (iGridY - 1) * iGapY,
+        iHeight = (iGridY * iY) + iGaps,
+        iText = getTitleOffset(sTitle, 0),
+        iPosY = iInitialTop + iY + iGapY + (iHeight / 2) - (iText / 2),
+        iGapsX = (iGridX - 1) * iGapX,
+        iWidthX = (iGridX * iX) + iGapsX,
+        iPosX = iInitialLeft + iX + (iGapX * 5) + iWidthX;
+
+    createTitleBox(sTitle, iPosY, iPosX, 2);
+}
 
 let createLogo = () => {
     let iGridX = Grid.values.gridX,
@@ -244,6 +282,7 @@ let getXML = () => {
 
     createLegendX();
     createLegendY();
+    createPasses();
     createColTitles();
     createRowTitles();
     createRows();
