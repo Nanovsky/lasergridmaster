@@ -351,6 +351,10 @@ let createLogo = () => {
         iPosX = iInitialLeft + iX + (iGapX * 3) + (iWidth / 2) - 18.25 /* Width of text */,
         iPosY = iInitialTop + iY + (iGapY * 2) + iHeight;
 
+    if (iGridY === 1 && iGridX < 4) {
+        iPosY += 5;
+    }
+
     createTitleBox("LaserGridMaster.com", iPosY, iPosX);
 };
 

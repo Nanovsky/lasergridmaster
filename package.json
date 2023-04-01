@@ -21,6 +21,7 @@
     "client-zip": "^2.3.0",
     "convert": "^4.10.0",
     "detect-inapp": "github:f2etw/detect-inapp",
+    "interactjs": "^1.10.17",
     "uuid": "^9.0.0",
     "vite-plugin-handlebars": "^1.6.0"
   }

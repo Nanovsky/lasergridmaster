@@ -19,6 +19,7 @@ import "@ui5/webcomponents/dist/Dialog";
 import "@ui5/webcomponents-icons/dist/download.js";
 import "@ui5/webcomponents-icons/dist/sys-cancel-2.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
+import interact from "interactjs";
 
 import { setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 setLanguage("en");
@@ -40,6 +41,8 @@ const inapp = new InApp(navigator.userAgent || navigator.vendor || window.opera)
 
     const $GridCont = document.getElementById("grid_container");
     const $Grid = document.getElementById("grid");
+    const $GridScale = document.getElementById("grid_scale");
+    const $Resize = document.getElementById('resizable');
 
     let updateControls = oGrid => {
         let Power = document.getElementById("power_controls"),
@@ -49,14 +52,69 @@ const inapp = new InApp(navigator.userAgent || navigator.vendor || window.opera)
         Speed.classList.toggle("hide", oGrid.values.gridY === 1);
     }
 
+    let saveState = oGrid => {
+        let sHash = "";
+
+        try {
+            sHash = JSON.stringify(oGrid.values);
+        } catch (e) {
+            // We just can't create a valid state so we reset it
+            document.location.hash = "";
+            return;
+        }
+
+        document.location.hash = encodeURIComponent(sHash);
+    };
+
+    let restoreState = () => {
+        let sHash = document.location.hash?.slice(1),
+            oValues;
+
+        if (!sHash) {
+            return;
+        }
+
+        try {
+            oValues = JSON.parse(decodeURIComponent(sHash));
+        } catch (e) {
+            // We can't restore the state so we do nothing.
+            return;
+        }
+
+        let iGridX = parseInt(oValues.gridX),
+            iGridY = parseInt(oValues.gridY);
+
+        // Resize handler
+        $Resize.style.width = iGridX * 50 + "px";
+        $Resize.style.height = iGridY * 50 + "px";
+
+        document.getElementById("grid_x").value = iGridX;
+        document.getElementById("grid_y").value = iGridY;
+        document.getElementById("power_min").value = oValues.powerMin;
+        document.getElementById("power_max").value = oValues.powerMax;
+        document.getElementById("speed_min").value = oValues.speedMin;
+        document.getElementById("speed_max").value = oValues.speedMax;
+        document.getElementById("label_speed").value = oValues.labelSpeed;
+        document.getElementById("label_power").value = oValues.labelPower;
+        document.getElementById("passes").value = oValues.passes;
+        document.getElementById("logo").checked = oValues.logo;
+        document.getElementById("simulate").checked = oValues.simulate;
+        document.getElementById(oValues.mode).pressed = true;
+        document.getElementById(oValues.speedUnit.replace("/", "")).pressed = true;
+    }
+
     // Attach change event listeners
     let aElements = document.querySelectorAll(".change"),
         updateGrid = oEvent => {
             let oGrid = calc.getGrid();
 
+            saveState(oGrid);
             updateControls(oGrid);
 
             draw.go(oGrid);
+
+            $Resize.style.width = oGrid.values.gridX * 50 + "px";
+            $Resize.style.height = oGrid.values.gridY * 50 + "px";
 
             if (import.meta.env.DEV || window.location.href.includes("debug=true")) {
                 console.log(oGrid);
@@ -197,11 +255,11 @@ const inapp = new InApp(navigator.userAgent || navigator.vendor || window.opera)
             iScale = ((iContainer / 620) * 100) - 5;
 
         if (iContainer < 630) {
-            $Grid.style.setProperty("transform", `scale(${iScale}%)`);
-            $Grid.style.removeProperty("width");
+            $GridScale.style.setProperty("transform", `scale(${iScale}%)`);
+            $GridScale.style.removeProperty("width");
         } else {
-            $Grid.style.removeProperty("transform");
-            $Grid.style.setProperty("width", "100%");
+            $GridScale.style.removeProperty("transform");
+            $GridScale.style.setProperty("width", "100%");
         }
     }
 
@@ -211,6 +269,7 @@ const inapp = new InApp(navigator.userAgent || navigator.vendor || window.opera)
 
     // Initial grid
     window.addEventListener("load", () => {
+        restoreState();
         setTimeout(updateGrid, 500);
         fnGridResize();
     });
@@ -255,6 +314,44 @@ const inapp = new InApp(navigator.userAgent || navigator.vendor || window.opera)
         document.getElementById("in_app_warning").style.display = "block";
         document.getElementById("download_group").classList.add("warn");
     }
+
+    let $grid_x = document.getElementById("grid_x");
+    let $grid_y = document.getElementById("grid_y");
+
+    interact($Resize)
+        .resizable({
+            edges: { top: false, left: false, bottom: true, right: true },
+            modifiers: [
+                interact.modifiers.snap({
+                    targets: [
+                        interact.snappers.grid({ x: 50, y: 50 })
+                    ],
+                    relativePoints: [ { x: 0, y: 0 } ]
+                }),
+                interact.modifiers.restrictSize({
+                    min: { width: 50, height: 50 },
+                    max: { width: 510, height: 510 }
+                })
+            ],
+            listeners: {
+                move: function (event) {
+                    let target = event.target,
+                        iWidth = event.rect.width,
+                        iHeight = event.rect.height,
+                        iBoxX = Math.round(iWidth / 50),
+                        iBoxY = Math.round(iHeight / 50);
+
+                    // update the element's style
+                    target.style.width = iWidth + 'px';
+                    target.style.height = iHeight + 'px';
+
+                    $grid_x.value = iBoxX;
+                    $grid_y.value = iBoxY;
+                    updateGrid();
+                }
+            }
+        });
+
 
     // Copyright
     document.getElementById("copy_year").textContent = new Date().getFullYear();
