@@ -88,24 +88,34 @@ let getRow = (oRow) => {
 
 let getLegendX = () => {
     let iGridX = oGrid.values.gridX,
-        iSizeX = (iGridX * iX) + (iGridX * iGapX) - iGapX;
+        iSizeX = (iGridX * iX) + (iGridX * iGapX) - iGapX,
+        iOffsetLeft = iLeft+(iGapX * 2)+iX;
 
     if (iSizeX < 80) {
         iSizeX = 80;
     }
 
-    return `<div id="legendX" style="left:${iLeft+(iGapX * 2)+iX}px;width:${iSizeX}px;">Power %</div>`;
+    if (iGridX === 1) {
+        iOffsetLeft -= 20;
+    }
+
+    return `<div id="legendX" style="left:${iOffsetLeft}px;width:${iSizeX}px;">Power %</div>`;
 };
 
 let getLegendY = () => {
     let iGridY = oGrid.values.gridY,
-        iSizeY = (iGridY * iY) + (iGridY * iGapY) - iGapY;
+        iSizeY = (iGridY * iY) + (iGridY * iGapY) - iGapY,
+        iOffsetTop = iTop+iGapY+iY;
 
-    if (iSizeY < 110) {
+    if (iGridY < 2) {
+        iOffsetTop = iTop+iGapY+(iGridY * 5);
+    }
+
+    if (iGridY < 3) {
         iSizeY = 110;
     }
 
-    return `<div id="legendY" style="top:${iTop+iGapY+iY}px;height:${iSizeY}px;">Speed ${oGrid.values.speedUnit}</div>`;
+    return `<div id="legendY" style="top:${iOffsetTop}px;height:${iSizeY}px;">Speed ${oGrid.values.speedUnit}</div>`;
 };
 
 let getPasses = oGrid => {
@@ -113,13 +123,18 @@ let getPasses = oGrid => {
         iGridX = oGrid.values.gridX,
         iPasses = oGrid.values.passes,
         iSizeY = (iGridY * iY) + (iGridY * iGapY) - iGapY,
-        iSizeX = iLeft + (iGridX * iX) + (iGridX * iGapX);
+        iSizeX = iLeft + (iGridX * iX) + (iGridX * iGapX),
+        iOffsetTop = iTop;
 
-    if (iSizeY < 90) {
+    if (iGridY < 2) {
+        iOffsetTop = iTop - (iSizeY / 2);
+    }
+
+    if (iGridY < 3) {
         iSizeY = 90;
     }
 
-    return `<div id="passes" class="passes_${iPasses}" style="top:${iTop}px;left:${iSizeX}px;height:${iSizeY}px;">Passes: ${iPasses}</div>`;
+    return `<div id="passes" class="passes_${iPasses}" style="top:${iOffsetTop}px;left:${iSizeX}px;height:${iSizeY}px;">Passes: ${iPasses}</div>`;
 }
 
 let attachListeners = () => {
@@ -172,14 +187,23 @@ let getLogo = () => {
         iGridY = oGrid.values.gridY,
         iSizeX = (iGridX * iX) + (iGridX * iGapX) - iGapX,
         iSizeY = (iGridY * iY) + (iGridY * iGapY) - iGapY,
-        iLLeft = (iGridX > 2 ? iLeft : 0)+(iGapX * 2)+iX,
+        iOffsetLeft = (iGridX > 2 ? iLeft : 0)+(iGapX * 2)+iX,
+        iTop = iSizeY+(iGapY/6)+(iY * 2),
         sText = "LaserGridMaster.com";
+
+    if (iGridY === 1 && iGridX < 4) {
+        iTop += 40;
+    }
 
     if (iSizeX < 80) {
         iSizeX = 80;
     }
 
-    return `<div id="logo" style="top:${iSizeY+(iGapY/6)+(iY * 2)}px;left:${iLLeft}px;width:${iSizeX}px;">${sText}</div>`;
+    if (iGridX === 1) {
+        iOffsetLeft -= 30;
+    }
+
+    return `<div id="logo" style="top:${iTop}px;left:${iOffsetLeft}px;width:${iSizeX}px;">${sText}</div>`;
 };
 
 let go = (grid) => {
