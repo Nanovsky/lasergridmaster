@@ -113,8 +113,8 @@ const inapp = new InApp(navigator.userAgent || navigator.vendor || window.opera)
 
             draw.go(oGrid);
 
-            $Resize.style.width = oGrid.values.gridX * 50 + "px";
-            $Resize.style.height = oGrid.values.gridY * 50 + "px";
+            $Resize.style.width = ((oGrid.values.gridX * 50) + 10) + "px";
+            $Resize.style.height = ((oGrid.values.gridY * 50) + 10) + "px";
 
             if (import.meta.env.DEV || window.location.href.includes("debug=true")) {
                 console.log(oGrid);

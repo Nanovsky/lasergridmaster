@@ -298,6 +298,16 @@ main *:not(:defined) {
     );
 
     background: transparent;
+
+    background-image: url("resources/resizeHandle.svg");
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    background-size: 30px 30px;
+    opacity: 0.2;
+}
+
+#resizable:hover {
+    opacity: 1;
 }
 
 #resizable.debug:hover {
