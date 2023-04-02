@@ -1,5 +1,6 @@
 import "../css/style.css";
 import "../resources/grid.png";
+import "../resources/resizeHandle.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "@ui5/webcomponents/dist/Button.js";
@@ -112,6 +113,8 @@ const inapp = new InApp(navigator.userAgent || navigator.vendor || window.opera)
             updateControls(oGrid);
 
             draw.go(oGrid);
+
+            document.getElementById("overlay").innerText = `${oGrid.values.gridX}x${oGrid.values.gridY}`;
 
             $Resize.style.width = ((oGrid.values.gridX * 50) + 10) + "px";
             $Resize.style.height = ((oGrid.values.gridY * 50) + 10) + "px";
@@ -347,6 +350,7 @@ const inapp = new InApp(navigator.userAgent || navigator.vendor || window.opera)
 
                     $grid_x.value = iBoxX;
                     $grid_y.value = iBoxY;
+
                     updateGrid();
                 }
             }

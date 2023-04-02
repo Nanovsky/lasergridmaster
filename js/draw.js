@@ -191,8 +191,8 @@ let getLogo = () => {
         iTop = iSizeY+(iGapY/6)+(iY * 2),
         sText = "LaserGridMaster.com";
 
-    if (iGridY === 1 && iGridX < 4) {
-        iTop += 40;
+    if (iGridX < 4) {
+        iTop += iGridY === 1 ? 40 : 10;
     }
 
     if (iSizeX < 80) {

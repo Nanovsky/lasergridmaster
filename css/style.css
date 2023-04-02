@@ -299,17 +299,34 @@ main *:not(:defined) {
 
     background: transparent;
 
-    background-image: url("resources/resizeHandle.svg");
+    background-image: url("../resources/resizeHandle.svg");
     background-repeat: no-repeat;
     background-position: bottom right;
     background-size: 30px 30px;
     opacity: 0.2;
+    transition: opacity 280ms;
 }
 
-#resizable:hover {
+#grid_scale:hover #resizable {
+    opacity: 1;
+}
+
+#grid_scale:hover #overlay {
     opacity: 1;
 }
 
 #resizable.debug:hover {
     border: solid rgba(50, 50, 50, 0.3) 1px;
+}
+
+#overlay {
+    position: absolute;
+    font-size: large;
+    font-weight: bold;
+    margin-left: 10px;
+    margin-top: 10px;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.2;
+    transition: opacity 280ms;
 }
