@@ -310,8 +310,13 @@ main *:not(:defined) {
 #grid_scale:hover #resizable {
     opacity: 1;
 }
-
+#grid_scale.mousedown #resizable {
+    opacity: 1;
+}
 #grid_scale:hover #overlay {
+    opacity: 1;
+}
+#grid_scale.mousedown #overlay {
     opacity: 1;
 }
 

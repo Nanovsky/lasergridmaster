@@ -321,6 +321,13 @@ const inapp = new InApp(navigator.userAgent || navigator.vendor || window.opera)
     let $grid_x = document.getElementById("grid_x");
     let $grid_y = document.getElementById("grid_y");
 
+    $GridScale.addEventListener("mousedown", e => {
+        $GridScale.classList.add("mousedown");
+    });
+    document.addEventListener("mouseup", e => {
+        $GridScale.classList.remove("mousedown");
+    });
+
     interact($Resize)
         .resizable({
             edges: { top: false, left: false, bottom: true, right: true },
