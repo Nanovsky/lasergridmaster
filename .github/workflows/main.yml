@@ -25,4 +25,4 @@ jobs:
           username: ${{ secrets.GITHUBUSER }}
           password: ${{ secrets.GITHUBPASSWORD }}
           local-dir: ./dist/
-          dry-run: true
+          dry-run: false

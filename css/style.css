@@ -14,7 +14,7 @@
 
 #grid_scale {
     width:620px;
-    height:600px;
+    height:610px;
     position: relative;
     display: inline-block;
     transform-origin: top left;
@@ -28,6 +28,7 @@
     position: relative;
     display: inline-block;
     transform-origin: top left;
+    user-select: none;
     background-size: 40px 40px;
     background-image:
             linear-gradient(to right, var(--grid-light) 1px, transparent 1px),
