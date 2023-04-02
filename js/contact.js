@@ -1,6 +1,5 @@
-import "../css/style.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
+import '../css/style.scss'
+import * as bootstrap from 'bootstrap'
 (() => {
     // Copyright
     document.getElementById("copy_year").textContent = new Date().getFullYear();

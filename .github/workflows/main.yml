@@ -25,5 +25,5 @@ jobs:
           username: ${{ secrets.GITHUBUSER }}
           password: ${{ secrets.GITHUBPASSWORD }}
           local-dir: ./dist/
-          dangerous-clean-slate: true
+          dangerous-clean-slate: false
           dry-run: false

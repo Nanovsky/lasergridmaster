@@ -1,8 +1,7 @@
-import "../css/style.css";
 import "../resources/grid.png";
 import "../resources/resizeHandle.svg";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
+import '../css/style.scss'
+import * as bootstrap from 'bootstrap'
 import "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents/dist/Label.js";
 import "@ui5/webcomponents/dist/Input.js";
@@ -279,37 +278,37 @@ const inapp = new InApp(navigator.userAgent || navigator.vendor || window.opera)
 
     let $Power = document.getElementById("power_controls");
     $Power.addEventListener("mouseenter", () => {
-        $Grid.classList.add("focus_power");
+        $GridScale.classList.add("focus_power");
     });
     $Power.addEventListener("mouseleave", () => {
-        $Grid.classList.remove("focus_power");
+        $GridScale.classList.remove("focus_power");
     });
 
     let $Speed = document.getElementById("speed_controls");
     $Speed.addEventListener("mouseenter", () => {
-        $Grid.classList.add("focus_speed");
+        $GridScale.classList.add("focus_speed");
     });
     $Speed.addEventListener("mouseleave", () => {
-        $Grid.classList.remove("focus_speed");
+        $GridScale.classList.remove("focus_speed");
     });
 
     let $Passes = document.getElementById("passes"),
         bPassesFocused = false;
 
     $Passes.addEventListener("mouseenter", () => {
-        $Grid.classList.add("focus_passes");
+        $GridScale.classList.add("focus_passes");
     });
     $Passes.addEventListener("focusin", () => {
-        $Grid.classList.add("focus_passes");
+        $GridScale.classList.add("focus_passes");
         bPassesFocused = true;
     });
     $Passes.addEventListener("mouseleave", () => {
         if (!bPassesFocused) {
-            $Grid.classList.remove("focus_passes");
+            $GridScale.classList.remove("focus_passes");
         }
     });
     $Passes.addEventListener("focusout", () => {
-        $Grid.classList.remove("focus_passes");
+        $GridScale.classList.remove("focus_passes");
         bPassesFocused = false;
     });
 

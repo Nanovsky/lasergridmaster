@@ -9,12 +9,13 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "jquery": "^3.6.4",
     "php-server": "^1.0.0",
     "sass": "^1.58.3",
     "vite": "^4.1.0"
   },
   "dependencies": {
+    "jquery": "^3.6.4",
+    "@popperjs/core": "^2.11.7",
     "@ui5/webcomponents": "^1.10.4",
     "@ui5/webcomponents-icons": "^1.10.4",
     "bootstrap": "^5.2.3",
