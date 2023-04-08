@@ -372,3 +372,7 @@ main *:not(:defined) {
 #faq ui5-panel::part(content) {
   background: transparent;
 }
+
+#product_switch {
+  opacity: 0.5;
+}
