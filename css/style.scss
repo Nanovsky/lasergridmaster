@@ -7,11 +7,22 @@
   --box-hover-color: #efe5b3;
   --box-cut-hover: #a9bbff;
   --grid-light:rgba(240, 240, 240, 0.8);
-  --navbar-bg-color: #c8792c;
+  --navbar-bg-color: rgba(200, 121, 44, 0.7);
   --warning: #ffa600;
   --warning-border: #ffe770;
   --warning-bg: #fff8d6;
   --grid-labels-highlight: #FF0000;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  background-image: url("../resources/wave8.svg");
+  background-repeat: no-repeat;
+  background-position: top;
+  height: 100%;
 }
 
 #grid_scale {
@@ -20,6 +31,7 @@
   position: relative;
   display: inline-block;
   transform-origin: top left;
+  background: white;
 }
 
 #grid {
@@ -355,4 +367,8 @@ main *:not(:defined) {
   pointer-events: none;
   opacity: 0.2;
   transition: opacity 280ms;
+}
+
+#faq ui5-panel::part(content) {
+  background: transparent;
 }
