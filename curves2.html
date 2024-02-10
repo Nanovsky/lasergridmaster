@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width">
+    <title></title>
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Helvetica', Arial, sans-serif;
+        }
+
+        canvas {
+            width: 600px;
+            height: 600px;
+            border: solid #666 1px;
+        }
+    </style>
+</head>
+<body>
+<canvas id="curve-target"></canvas>
+<canvas id="curveX"></canvas>
+<canvas id="curveY"></canvas>
+
+<script type="module">
+    import curve from "./js/curve.js";
+    import {Bezier} from "./node_modules/bezier-js/src/bezier.js";
+
+    const cvs = document.getElementById("curveX");
+    const size = 600;
+    cvs.width  = size;
+    cvs.height = size;
+    const ctx = cvs.getContext("2d");
+
+    const cvsY = document.getElementById("curveY");
+    cvsY.width  = size;
+    cvsY.height = size;
+    const ctxY = cvsY.getContext("2d");
+
+    let fnGetXMultiplier = (oCurve, oPoint, i) => {
+        let iDiff = 1;
+        if (window.aBase) {
+            let iXBase = window.aBase[i].x;
+            let iX = oPoint.x;
+
+            if (iXBase < iX) {
+                let iWidth = oCurve.iDrawWidth - iXBase,
+                    iMove = iX - iXBase;
+
+                iDiff = 1 + (iMove / iWidth);
+            } else {
+                iDiff = iX / iXBase;
+            }
+        }
+
+        return iDiff;
+    };
+
+    let fnGetYMultiplier = (oCurve, oPoint, i) => {
+        let iDiff = 1;
+        if (window.aBase) {
+            let iYBase = window.aBase[i].y;
+            let iY = oPoint.y;
+
+            if (iYBase < iY) {
+                let iHeight = oCurve.iDrawHeight - iYBase,
+                    iMove = iY - iYBase;
+
+                iDiff = 1 + (iMove / iHeight);
+            } else {
+                iDiff = iY / iYBase;
+            }
+        }
+
+        return iDiff;
+    };
+
+    let fnGetCurve = () => {
+        let oCurve = curve.getCurve();
+
+        const b = new Bezier(
+            0,
+            oCurve.iDrawHeight,
+            oCurve.p1x * oCurve.iDrawWidth,
+            (1 - oCurve.p1y) * oCurve.iDrawHeight,
+            oCurve.p2x * oCurve.iDrawWidth,
+            (1 - oCurve.p2y) * oCurve.iDrawHeight,
+            oCurve.iDrawWidth,
+            0
+        );
+
+        let aLUT = b.getLUT(9);
+        let aLUTY = b.getLUT(4);
+
+        console.clear();
+
+        console.dir(aLUT);
+
+        console.group("X");
+        console.log(1);
+        console.log(fnGetXMultiplier(oCurve, aLUT[1], 1));
+        console.log(fnGetXMultiplier(oCurve, aLUT[2], 2));
+        console.log(fnGetXMultiplier(oCurve, aLUT[3], 3));
+        console.log(fnGetXMultiplier(oCurve, aLUT[4], 4));
+        console.log(fnGetXMultiplier(oCurve, aLUT[5], 5));
+        console.log(fnGetXMultiplier(oCurve, aLUT[6], 6));
+        console.log(fnGetXMultiplier(oCurve, aLUT[7], 7));
+        console.log(fnGetXMultiplier(oCurve, aLUT[8], 8));
+        console.log(1);
+        console.groupEnd();
+
+        console.group("Y");
+        console.log(1);
+        console.log(fnGetYMultiplier(oCurve, aLUTY[1], 1));
+        console.log(fnGetYMultiplier(oCurve, aLUTY[2], 2));
+        console.log(fnGetYMultiplier(oCurve, aLUTY[3], 3));
+        console.log(1);
+        console.groupEnd();
+
+        ctx.clearRect(0, 0, 600, 600);
+
+        ctx.save();
+
+        ctx.translate(40, 40);
+        ctx.moveTo(0, oCurve.iDrawHeight);
+
+        ctx.fillStyle = "#FF0";
+        ctx.strokeStyle = "#000";
+        ctx.lineWidth = 2;
+
+        aLUT.forEach(o => {
+            ctx.beginPath();
+            ctx.arc(o.x, o.y, 5, 0, 6.283);
+
+            ctx.stroke();
+            ctx.closePath();
+        });
+
+        ctx.restore();
+
+        ctxY.clearRect(0, 0, 600, 600);
+
+        ctxY.save();
+
+        ctxY.translate(40, 40);
+        ctxY.moveTo(0, oCurve.iDrawHeight);
+
+        ctxY.fillStyle = "#FF0";
+        ctxY.strokeStyle = "#000";
+        ctxY.lineWidth = 2;
+
+        aLUTY.forEach(o => {
+            ctxY.beginPath();
+            ctxY.arc(o.x, o.y, 5, 0, 6.283);
+
+            ctxY.stroke();
+            ctxY.closePath();
+        });
+
+        ctxY.restore();
+
+        return aLUT;
+    }
+
+    curve.create({
+        target: document.getElementById("curve-target"),
+        width: 600,
+        height: 600,
+        marker: 8,
+        markerEnd: 12,
+        strokeColor: "#999",
+        markerStrokeColor: "rgb(200, 121, 44)",
+        change: fnGetCurve
+    });
+
+    let aBase = fnGetCurve();
+
+    window.aBase = aBase;
+</script>
+
+</body>
+</html>
