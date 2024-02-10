@@ -1,4 +1,7 @@
 import convert from "convert";
+import curve from "./curve.js";
+
+let oMultipliers;
 
 let getValues = () => {
   let sSpeed = document.getElementById("speed_unit")
@@ -36,9 +39,7 @@ let getSimulatedPower = (oValues, iPower, iSpeed) => {
     // Reverse speed effect
     fSpeed = 100 - fSpeed;
 
-    let fEffect = getRangePercent(0, 200, fPower + fSpeed);
-
-    return fEffect;
+    return getRangePercent(0, 200, fPower + fSpeed);
 };
 
 let getCols = (oValues, iSpeed) => {
@@ -87,9 +88,11 @@ let getRows = (oValues) => {
     let iSpeed = oValues.speedMin;
 
     for (let i = 0;i < (oValues.gridY - 1); i++) {
+        let iFinalSpeed = Math.round(iSpeed * oMultipliers.x[i]);
+
         aRows.push({
-            title: formatSpeed(iSpeed),
-            speed: iSpeed,
+            title: formatSpeed(iFinalSpeed),
+            speed: iFinalSpeed,
             step: iStep,
             passes: oValues.passes,
             cols: getCols(oValues, iSpeed)
@@ -123,8 +126,16 @@ let getRowTitles = (aGrid) => {
     return aGrid.map(oRow => oRow.title);
 }
 
+let updateMultipliers = oValues => {
+    oMultipliers = curve.getMultipliers(oValues.gridX, oValues.gridY);
+};
+
 let getGrid = () => {
     let oValues = getValues();
+
+    // Reconfigure curve if needed
+    curve.configure(oValues.gridX, oValues.gridY);
+    updateMultipliers(oValues);
 
     if (!validateValues(oValues)) return false;
 

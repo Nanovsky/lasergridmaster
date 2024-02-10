@@ -26,6 +26,12 @@ const pageData = {
         page: 'contact',
         contact_active: 'active',
         meta_description: 'Contact page with information about the author of the service and links to social networks and mail address.'
+    },
+    '/curve2.html': {
+        title: '::Contact',
+        page: 'contact',
+        contact_active: 'active',
+        meta_description: 'Contact page with information about the author of the service and links to social networks and mail address.'
     }
 };
 

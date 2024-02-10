@@ -29,6 +29,7 @@ import draw from "./draw.js";
 import toLightBurn from "./export_lightburn.js";
 import toXCS from "./export_xcs.js";
 import util from "./util.js";
+import curve from "./curve.js";
 
 // Handle in app warning message
 import InApp from 'detect-inapp';
@@ -362,6 +363,27 @@ const inapp = new InApp(navigator.userAgent || navigator.vendor || window.opera)
             }
         });
 
+    setTimeout(function () {
+        let fnGetCurve = () => {
+            updateGrid();
+        };
+
+        setTimeout(function () {
+            curve.create({
+                target: document.getElementById("curve"),
+                width: 460,
+                height: 460,
+                marker: 8,
+                markerEnd: 12,
+                strokeColor: "#999",
+                markerStrokeColor: "rgb(200, 121, 44)",
+                change: fnGetCurve
+            });
+
+            fnGetCurve();
+        }.bind(this), 1000);
+
+    }.bind(this), 1000);
 
     // Copyright
     document.getElementById("copy_year").textContent = new Date().getFullYear();

@@ -3,7 +3,7 @@
   <div class="col col-sm-12 col-md-5 col-lg-5 text-center">
 
     <ui5-tabcontainer id="tabs" class="full-width" fixed content-background-design="Transparent">
-      <ui5-tab class="ui5-tab" text="Grid" selected>
+      <ui5-tab class="ui5-tab" text="Grid">
 
           <div>
             <ui5-label for="grid_x" show-colon>Grid X</ui5-label>
@@ -55,6 +55,13 @@
             </div>
           </div>
 
+      </ui5-tab>
+      <ui5-tab class="ui5-tab" text="Curve" selected>
+        <div class="row">
+          <div class="col">
+            <canvas id="curve"></canvas>
+          </div>
+        </div>
       </ui5-tab>
       <ui5-tab id="labels_tab" class="ui5-tab" text="Labels">
 
