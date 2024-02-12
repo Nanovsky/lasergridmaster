@@ -31,6 +31,7 @@ const pageData = {
 
 export default defineConfig(({command, mode, ssrBuild}) => {
     return {
+        base: "",
         build: {
             rollupOptions: {
                 input: {
