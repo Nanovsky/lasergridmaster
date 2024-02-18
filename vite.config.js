@@ -48,6 +48,10 @@ export default defineConfig(({command, mode, ssrBuild}) => {
                 context(pagePath) {
                     let oData = pageData[pagePath];
 
+                    if (!oData) {
+                        return;
+                    }
+
                     if (command === "serve") {
                         oData.env_dev = true;
                     } else {
