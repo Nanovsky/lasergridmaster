@@ -11,7 +11,7 @@ let iInitialLeft = 30,
     iGapX = 3,
     iGapY = 3;
 
-// sGroupUUID
+// let sGroupUUID;
 
 let Grid,
     o = {
@@ -20,10 +20,35 @@ let Grid,
             {
                 "id": "00000000-0000-0000-0000-000000000000",
                 "title": "{panel}1",
-                "displays": []
+                "layerData": {
+                    "#00befe": {
+                        "name": "{Cyan}",
+                        "order": 1,
+                        "visible": true
+                    }
+                },
+                "groupData": {},
+                "displays": [],
+                "extendInfo": {
+                    "version": "2.13.75",
+                    "rulerPluginData": {
+                        "rulerGuide": []
+                    },
+                    "gridOptions": {
+                        "color": "normal",
+                        "isShow": true
+                    }
+                }
             }
         ],
+        "extId": "F1Ultra",
+        "extName": "F1 Ultra",
         "device": {
+            "id": "F1Ultra",
+            "power": [
+                20,
+                20
+            ],
             "data": {
                 "dataType": "Map",
                 "value": [
@@ -34,8 +59,15 @@ let Grid,
                             "data": {
                                 "LASER_PLANE": {
                                     "material": 0,
-                                    "thickness": 0,
-                                    "cushion": 0
+                                    "lightSourceMode": "blue",
+                                    "thickness": null,
+                                    "isProcessByLayer": false,
+                                    "pathPlanning": "auto",
+                                    "fillPlanning": "separate",
+                                    "dreedyTsp": false,
+                                    "avoidSmokeModal": false,
+                                    "scanDirection": "topToBottom",
+                                    "xcsUsed": []
                                 }
                             },
                             "displays": {
@@ -48,9 +80,22 @@ let Grid,
             },
             "materialList": []
         },
-        "version": "1.1.24",
+        "version": "2.4.27",
         "created": 1678013263087,
-        "modify": 1678013263087
+        "modify": 1678013263087,
+        "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) xToolCreativeSpace/2.4.27 Chrome/116.0.5845.228 Electron/26.6.3 Safari/537.36",
+        "meta": [
+            {
+                "version": "2.4.27",
+                "date": 1741519125426,
+                "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) xToolCreativeSpace/2.4.27 Chrome/116.0.5845.228 Electron/26.6.3 Safari/537.36"
+            },
+            {
+                "version": "2.4.27",
+                "date": 1741525262520,
+                "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) xToolCreativeSpace/2.4.27 Chrome/116.0.5845.228 Electron/26.6.3 Safari/537.36"
+            }
+        ]
     };
 
 let setCanvasUUID = () => {
@@ -69,15 +114,22 @@ let getFill = (sUUID, iSpeed, iPower, iPasses) => {
             "data": {
                 "FILL_VECTOR_ENGRAVING": {
                     "materialType": "customize",
-                    "processIgnore": false,
+                    "planType": "official",
                     "parameter": {
                         "customize": {
+                            "bitmapEngraveMode": "normal",
+                            "processingLightSource": "blue",
                             "power": iPower,
                             "speed": iSpeed,
                             "repeat": iPasses,
+                            "dotDuration": 100,
+                            "dpi": 500,
                             "density": 100,
-                            "bitmapMode": "grayscale",
-                            "bitmapScanMode": "zMode"
+                            "bitmapScanMode": "zMode",
+                            "frequency": 30,
+                            "scanAngle": 0,
+                            "angleType": 2,
+                            "crossAngle": false
                         }
                     }
                 }
@@ -86,6 +138,7 @@ let getFill = (sUUID, iSpeed, iPower, iPasses) => {
             "isFill": false
         }
     ];
+
 }
 
 let getCut = (sUUID, iSpeed, iPower, iPasses) => {
@@ -116,11 +169,15 @@ let createTitleBox = (sText, iTop, iLeft, iRotate) => {
     let sUUID = uuidv4(),
         oText = {
             "id": sUUID,
+            "name": null,
             "type": "TEXT",
             "x": iLeft,
             "y": iTop,
             "angle": iRotate ? iRotate : 0,
-            "scale": {"x": 1,"y": 1},
+            "scale": {
+                "x": 0.20833333333333334,
+                "y": 0.20833333333333334
+            },
             "skew": {"x": 0,"y": 0},
             "pivot": {"x": 0,"y": 0},
             "localSkew": {"x": 0,"y": 0},
@@ -132,6 +189,8 @@ let createTitleBox = (sText, iTop, iLeft, iRotate) => {
             "isFill": true,
             "lineColor": 16421416,
             "fillColor": 16421416,
+            "layerTag": "#00befe",
+            "layerColor": "#00befe",
             // "groupTag": sGroupUUID,
             "text": sText,
             "resolution": 1,
@@ -148,25 +207,32 @@ let createTitleBox = (sText, iTop, iLeft, iRotate) => {
         oFill = [
             sUUID,
             {
+                "isFill": true,
+                "type": "TEXT",
                 "processingType": "FILL_VECTOR_ENGRAVING",
                 "data": {
                     "FILL_VECTOR_ENGRAVING": {
                         "materialType": "customize",
-                        "processIgnore": false,
+                        "planType": "official",
                         "parameter": {
                             "customize": {
                                 "power": Grid.values.labelPower,
                                 "speed": Grid.values.labelSpeed,
                                 "repeat": 1,
+                                "dotDuration": 100,
+                                "processingLightSource": "blue",
+                                "dpi": 500,
                                 "density": 100,
-                                "bitmapMode": "grayscale",
-                                "bitmapScanMode": "zMode"
+                                "bitmapScanMode": "zMode",
+                                "frequency": 30,
+                                "scanAngle": 0,
+                                "angleType": 2,
+                                "crossAngle": false
                             }
                         }
                     }
                 },
-                "type": "TEXT",
-                "isFill": false
+                "processIgnore": false
             }
         ];
 
@@ -237,7 +303,7 @@ let getLegendYLength = (sText) => {
 
 let createRowTitles = () => {
     Grid.rowTitles.forEach((sTitle) => {
-        createTitleBox(sTitle, iTop + 3.5, getTitleOffset(sTitle, iLeft));
+        createTitleBox(sTitle, iTop + 3.5, getTitleOffset(sTitle, 33));
         iTop += iY + iGapY;
     });
     iTop += iGapY;
