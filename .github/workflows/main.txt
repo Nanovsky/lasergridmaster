@@ -19,7 +19,7 @@ jobs:
         run: npm run build
 
       - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ftp.lasergridmaster.com
           username: ${{ secrets.GITHUBUSER }}
